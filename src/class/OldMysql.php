@@ -15,8 +15,8 @@ final class Mysql {
         $username = $config['username'];
         $password = $config['password'];
         $database = $config['database'];
-        $charset  = get_var( $config['charset'], 'utf8' );
-        $debug    = get_var( $config['debug'], 0 );
+        $charset  = $config['charset'] ?? 'utf8';
+        $debug    = $config['debug'] ?? false;
 
         $this->link = mysqli_connect($hostname, $username, $password, $database, $port);
 
