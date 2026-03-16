@@ -10,11 +10,11 @@
     "require": {
         "php": ">=8.2",
         "beberlei/assert": "^3.3",
-        "phpunit/phpunit": "^9.6"
+        "phpunit/phpunit": "^11.2"
     },
     "autoload": {
         "psr-4": {
-            "Blocks\\Database\\": "src/class"
+            "Blocks\\Database\\": "src"
         }
     },
     "authors": [

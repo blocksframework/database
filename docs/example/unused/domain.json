@@ -1,0 +1,64 @@
+{
+  "table": {
+    "name": "domain",
+    "type": "InnoDB",
+    "collation": "utf8mb4_general_ci",
+    "comment": "A table for storing domain list"
+  },
+  "columns": {
+    "domain_id": {
+      "type": "integer(11)",
+      "index": "primary",
+      "autoincrement": true
+    },
+    "user_id": {
+      "type": "integer(11)",
+      "index": "index"
+    },
+    "name": {
+      "type": "string(255)",
+      "collation": "utf8mb4_general_ci",
+      "index": "index"
+    },
+    "description": {
+      "type": "text",
+      "collation": "utf8mb4_general_ci"
+    },
+    "account": {
+      "type": "string(255)",
+      "collation": "utf8mb4_general_ci",
+      "index": "index"
+    },
+    "expiration_date": {
+      "type": "integer(11)",
+      "index": "index"
+    },
+    "note_id": {
+      "type": "integer(11)",
+      "index": "index"
+    },
+    "position": {
+      "type": "integer(11)",
+      "index": "index"
+    },
+    "status": {
+      "type": "tinyint(1)",
+      "index": "index"
+    },
+    "deleted_by": {
+      "type": "integer(11)",
+      "index": "index"
+    },
+    "deleted_on": {
+      "type": "integer(11)",
+      "index": "index"
+    }
+  },
+  "relations": {
+    "account_account": {
+      "foreign": "account_id",
+      "foreignType": "one",
+      "type": "one"
+    }
+  }
+}

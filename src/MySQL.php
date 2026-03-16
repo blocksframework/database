@@ -2,7 +2,7 @@
 
 namespace Blocks\Database;
 
-use Blocks\Config\File;
+use Blocks\Config\File as FileConfig;
 use Assert\Assert;
 use Assert\LazyAssertionException;
 use Exception;
@@ -12,17 +12,20 @@ class MySQL {
     private static $link;
 
     private static function init() {
-        $hostname = File::get('database/mysql', 'hostname');
-        $port = (int)File::get('database/mysql', 'port');
-        $username = File::get('database/mysql', 'username');
-        $password = File::get('database/mysql', 'password');
-        $database = File::get('database/mysql', 'database');
-        $charset = File::get('database/mysql', 'charset');
+        if ( !is_file(DIR_PATH . "/config/mysql.php") ) {
+            exit('The web-site seems to be unconfigured. The mysql config file is missing.');
+        }
+
+        $hostname = FileConfig::get('mysql', 'mysql_hostname');
+        $port = (int)FileConfig::get('mysql', 'mysql_port');
+        $username = FileConfig::get('mysql', 'mysql_username');
+        $password = FileConfig::get('mysql', 'mysql_password');
+        $database = FileConfig::get('mysql', 'mysql_database');
+        $charset = FileConfig::get('mysql', 'mysql_charset');
  
-       if ( empty($hostname) || empty($database) ) {
-            if ( !is_file(DIR_PATH . "/config/database/mysql.php") ) {
-                exit('The web-site seems to be unconfigured. The mysql config file is missing.');
-            }
+        // TODO: to add more fields, except of password which can be empty
+        if ( empty($hostname) || empty($database) ) {
+             exit('The web-site seems to be unconfigured. The mysql config file contains empty params.');
         }
 
         try {

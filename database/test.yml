@@ -1,0 +1,57 @@
+table:
+    name: test_table
+    type: InnoDB
+    collation: utf8mb4_general_ci
+    comment: A comprehensive test table for database schema syncing
+
+columns:
+    id:
+        type: INT(11)
+        index: primary
+        autoincrement: true
+
+    short_string:
+        type: VARCHAR(255)
+        collation: utf8mb4_general_ci
+        nullable: false
+        default: "unnamed"
+
+    long_text:
+        type: TEXT
+        collation: utf8mb4_general_ci
+        nullable: true
+
+    is_active:
+        type: TINYINT(1)
+        default: 1
+
+    price:
+        type: DECIMAL(10,2)
+        nullable: true
+        default: NULL
+
+    status:
+        type: ENUM('pending', 'active', 'deleted')
+        default: 'pending'
+
+    sort_order:
+        type: INT(11)
+        default: 0
+        index: index
+
+    created_at:
+        type: DATETIME
+        default: CURRENT_TIMESTAMP
+
+indexes:
+    idx_status_active:
+        type: index
+        columns:
+            - status
+            - is_active
+
+    uniq_short_string_price:
+        type: unique
+        columns:
+            - short_string
+            - price
