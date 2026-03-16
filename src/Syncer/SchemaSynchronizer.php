@@ -7,6 +7,12 @@ use Symfony\Component\Yaml\Yaml;
 
 class SchemaSynchronizer {
 
+    private \PDO $pdo;
+
+    public function __construct(\PDO $pdo) {
+        $this->pdo = $pdo;
+    }
+
     public function run() {
         echo "Discovering schemas..." . PHP_EOL;
 
@@ -14,13 +20,16 @@ class SchemaSynchronizer {
         $loader = new Loader();
         $expectedSchemas = $loader->loadAll();
 
+        $this->sync($expectedSchemas);
+    }
+
+    public function sync(array $expectedSchemas) {
         echo sprintf("Found %d tables managed by YAML schemas.", count($expectedSchemas)) . PHP_EOL;
 
         // 2. Diff and Execute
-        $pdo = MySQL::getLink();
-        $inspector = new DatabaseInspector($pdo);
+        $inspector = new DatabaseInspector($this->pdo);
         $differ = new Differ();
-        $executor = new Executor($pdo);
+        $executor = new Executor($this->pdo);
 
         foreach ($expectedSchemas as $tableName => $schema) {
             echo PHP_EOL . "Checking table `$tableName`..." . PHP_EOL;

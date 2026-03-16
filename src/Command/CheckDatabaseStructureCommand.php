@@ -11,7 +11,8 @@ class CheckDatabaseStructureCommand extends Component {
     public function get() {
         echo "Starting Database Structure Check..." . PHP_EOL;
 
-        $synchronizer = new SchemaSynchronizer();
+        $pdo = \Blocks\Database\MySQL::getLink();
+        $synchronizer = new SchemaSynchronizer($pdo);
         $synchronizer->run();
 
         echo "Finished." . PHP_EOL;
